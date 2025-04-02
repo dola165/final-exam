@@ -38,7 +38,8 @@ Example: Pirates of the Caribbean consists of several installments:
 * At World’s End
 * On Stranger Tides
 * Dead Men Tell No Tales
-* Users must rate these installments separately, not the entire Pirates of the Caribbean franchise
+
+Users must rate these installments separately, not the entire Pirates of the Caribbean franchise
 
 ✅ The score of an episode is calculated as the average of all user ratings for that episode
 
