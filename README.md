@@ -1,143 +1,128 @@
 # final_exam
-this was a final exam for my 22 week long java course. everything here was written in slightly less than 3 hours.
-Imagine your company wants to develop a movie/series rating system.
-You have been assigned to implement it.
+this was a final exam for my 22 week long java course. everything here was written in slightly less than 3 hours so it is far from perfect.
 
-Requirements & Task Description
-Entities and their minimum requirements:
-Movie - The entity for a movie or series
 
-name - Title
+Imagine Your Company Wants to Develop a Movie/Series Rating System
+You have been assigned the task of implementing it.
 
-description - Description
+ Requirements & Task Description
+ Entities and Their Minimum Requirements:
 
-Episode - The entity for a movie/series episode
+`Movie`: (Represents a movie or TV series)
+ * `name`- The title of the movie or series
+ * `description` - A brief description
 
-season - Season number
+`Episode` (Represents an episode of a movie or series)
+ * `session` - The season number
+ * `episode`- The episode number
+ * `name` - The title of the episode
+ * `description` - A brief description
+ * `releaseDate` - The release date
 
-episode - Episode number
+`Score` (Represents a user rating)
+ * `persionalNo` - The user's personal number (assume the user already exists in the database)
+ Must be exactly 11 digits, containing only numbers
+ * `score` - The rating given by the user
+ * `eposode` - The episode being rated
 
-name - Episode title
+⚙️ Functionality:
+✅ CRUD operations for movies and series (Create, Read, Update, Delete)
+✅ Users can rate a movie
+✅ Users can rate an episode of a series (but not the series itself)
+✅ If the content is a series, both season and episode fields are mandatory
+✅ Some movies consist of multiple parts, and users must rate individual parts
 
-description - Description
+Example: Pirates of the Caribbean consists of several installments:
+* The Curse of the Black Pearl
+* Dead Man’s Chest
+* At World’s End
+* On Stranger Tides
+* Dead Men Tell No Tales
+* Users must rate these installments separately, not the entire Pirates of the Caribbean franchise
 
-releaseDate - Release date
+✅ The score of an episode is calculated as the average of all user ratings for that episode
 
-Score - The entity for ratings
+If an episode has not yet been rated, it should have a configurable default value
 
-personalNo - The personal number of the user (assume the user already exists in the database). Only numeric values, exactly 11 digits long.
+✅ The score of a series is calculated as the average of all its episodes' ratings
 
-score - Rating
+✅ The score of a movie (if it consists of multiple parts) is also calculated as the average of all its parts' ratings
 
-episode - The episode that was rated.
+✅ Implement a search endpoint to find movies/series by name
 
-Functionality
-CRUD operations (Create, Read, Update, Delete) must be supported for movies and series.
+It should include a boolean parameter to determine whether episode details should be included in the response
 
-Users must be able to rate a movie.
+🛠️ Technical Requirements:
+🔹 Follow standard naming conventions
 
-Users must be able to rate an episode of a series (not the series itself).
+🔹 Adhere to RESTful API design principles
 
-For series, both season and episode fields are required.
+🔹 Implement input validation
 
-Some movies consist of multiple parts, and users must rate each part separately.
+🔹 Provide Swagger API documentation for both models and controllers
 
-Example: Pirates of the Caribbean consists of multiple parts (The Curse of the Black Pearl, Dead Man's Chest, At World's End, On Stranger Tides, Dead Men Tell No Tales). Users should rate these individual parts, not Pirates of the Caribbean as a whole.
+📌 Example
+Consider a scenario where the Pirates of the Caribbean movies have been rated as follows:
 
-An episode’s score is calculated as the arithmetic mean of all ratings given to that episode.
+Episode Title	Ratings;
+ 1.The Curse of the Black Pearl -	7, 8, 5, 6, 7, 8
+ 2.Dead Man's Chest	- 4, 9, 7, 6, 8, 5, 4, 8, 5, 9
+ 3.At World's End	- 1, 9, 7, 10, 7, 6, 8, 7
+ 4.On Stranger Tides - 8, 7, 6, 8, 9, 10
+ 5.Dead Men Tell No Tales	- 7
 
-If an episode has not been rated yet, it should have a configurable default rating.
-
-A series’ score is calculated as the arithmetic mean of all its episodes’ ratings.
-
-A movie’s score is calculated in the same way as a series’ score.
-
-A search endpoint should be available to find a movie or series by name.
-
-The search endpoint should include a boolean parameter:
-
-If true, the response should include the list of episodes.
-
-If false, only the movie/series information should be returned.
-
-Technical Requirements
-Follow proper naming conventions.
-
-Follow REST API endpoint conventions.
-
-Use validation mechanisms.
-
-Provide Swagger documentation for both models and controllers.
-
-Example
-Consider ratings for Pirates of the Caribbean episodes:
-
-The Curse of the Black Pearl: 7, 8, 5, 6, 7, 8
-
-Dead Man's Chest: 4, 9, 7, 6, 8, 5, 4, 8, 5, 9
-
-At World's End: 1, 9, 7, 10, 7, 6, 8, 7
-
-On Stranger Tides: 8, 7, 6, 8, 9, 10
-
-Dead Men Tell No Tales: 7
-
-When searching for Pirates of the Caribbean, the response should be:
-
-With episodes included:
-json
-Copy
-Edit
+``` JSON
 {
   "name": "Pirates of the Caribbean",
   "description": "American fantasy supernatural swashbuckler film series",
   "releaseDate": "2003-07-09",
-  "score": 7.0, // Average (6.5, 6.8, 6.9, 7, 8) = 7.04 → Rounded to 7.0
+  "score": 7.0,  // Average of (6.5, 6.8, 6.9, 7, 8) = 7.04 → rounded to 7.0
   "episodes": [
     {
         "episode": 1,
         "name": "The Curse of the Black Pearl",
         "description": "Blacksmith Will Turner teams up with eccentric pirate Captain Jack Sparrow to save Turner's love ... AND SO ON",
         "releaseDate": "2003-07-09",
-        "score": 6.8 // Average (7,8,5,6,7,8) = 6.8333333 → Rounded to 6.8
+        "score": 6.8  // Average (7,8,5,6,7,8) = 6.833333 → rounded to 6.8
     },
     {
         "episode": 2,
         "name": "Dead Man's Chest",
         "description": "PLOT OF Dead Man's Chest.",
         "releaseDate": "2006-07-07",
-        "score": 6.5 // Average (4,9,7,6,8,5,4,8,5,9) = 6.5
+        "score": 6.5  // Average (4,9,7,6,8,5,4,8,5,9) = 6.5
     },
     {
         "episode": 3,
         "name": "At World's End",
         "description": "PLOT OF At World's End.",
         "releaseDate": "2007-05-25",
-        "score": 6.9 // Average (1,9,7,10,7,6,8,7) = 6.875 → Rounded to 6.9
+        "score": 6.9  // Average (1,9,7,10,7,6,8,7) = 6.875 → rounded to 6.9
     },
     {
         "episode": 4,
         "name": "On Stranger Tides",
         "description": "PLOT OF On Stranger Tides.",
         "releaseDate": "2011-05-20",
-        "score": 8.0 // Average (8,7,6,8,9,10) = 8
+        "score": 8.0  // Average (8,7,6,8,9,10) = 8.0
     },
     {
         "episode": 5,
         "name": "Dead Men Tell No Tales",
         "description": "PLOT OF Dead Men Tell No Tales.",
         "releaseDate": "2017-05-26",
-        "score": 7.0 // Average (7) = 7
+        "score": 7.0  // Average (7) = 7.0
     }
   ]
 }
-Without episodes:
-json
-Copy
-Edit
+``` 
+If episode details are not requested, the response should be:
+
+``` JSON
 {
   "name": "Pirates of the Caribbean",
   "description": "American fantasy supernatural swashbuckler film series",
   "releaseDate": "2003-07-09",
-  "score": 7.0 // Average (6.5, 6.8, 6.9, 7, 8) = 7.04 → Rounded to 7.0
+  "score": 7.0  // Average (6.5, 6.8, 6.9, 7, 8) = 7.04 → rounded to 7.0
 }
+``` 
