@@ -1,5 +1,5 @@
 # final_exam
-this was a final exam for my 22 week long java course. everything here was written in slightly less than 3 hours so it is far from perfect.
+**this was a final exam for my 22 week long java course. everything here was written in slightly less than 3 hours so it is far from perfect.**
 
 
 Imagine Your Company Wants to Develop a Movie/Series Rating System
