@@ -1,113 +1,129 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/F6ro3pjN)
-# საბოლოო გამოცდა.
-## 2025-03-19
+# final_exam
+**this was a final exam for my 22 week long java course. everything here was written in slightly less than 3 hours so it is far from perfect.**
 
 
-წარმოიდგინეთ თქვენს კომპანიას სურს აწარმოოს ფილმების/სერიალების შეფასების სისტემა.  
-ამის განხორციელება თქვენ დაგევალათ.
+Imagine Your Company Wants to Develop a Movie/Series Rating System
+You have been assigned the task of implementing it.
 
-### მოთხოვნები & ამოცანის აღწერა
+ Requirements & Task Description
+ Entities and Their Minimum Requirements:
 
-**Entity-ები და entity-ების მინიმალური მოთხოვნები**:
+`Movie`: (Represents a movie or TV series)
+ * `name`- The title of the movie or series
+ * `description` - A brief description
 
-`Movie`: ფილმის/სერიალის ენთითი
- * `name` - დასახელება.
- * `description` - აღწერა
+`Episode` (Represents an episode of a movie or series)
+ * `session` - The season number
+ * `episode`- The episode number
+ * `name` - The title of the episode
+ * `description` - A brief description
+ * `releaseDate` - The release date
 
-`Episode` ფილმის/სერიალის ეპიზოდის ენთითი
- * `session` - სეზონის ნომერი
- * `episode` - ეპიზოდის ნომერი
- * `name` - ეპიზოდის დასახელება
- * `description` - აღწერა
- * `releaseDate` - გამოშვების თარიღი
+`Score` (Represents a user rating)
+ * `persionalNo` - The user's personal number (assume the user already exists in the database)
+ Must be exactly 11 digits, containing only numbers
+ * `score` - The rating given by the user
+ * `eposode` - The episode being rated
 
-`Score` - შეფასების ენთითი
-* `persionalNo` - მომხმარებლის (ჩათვალეთ ის უკე არსებობს ბაზაში) პირადი ნომერი - მხოლოდ რიცხვები 11 სიგრძის.
-* `score` - შეფასება 
-* `eposode` - რომელი ეპიზოდი შეაფასა.
+⚙️ Functionality:
+✅ CRUD operations for movies and series (Create, Read, Update, Delete)
+✅ Users can rate a movie
+✅ Users can rate an episode of a series (but not the series itself)
+✅ If the content is a series, both season and episode fields are mandatory
+✅ Some movies consist of multiple parts, and users must rate individual parts
 
-**ფუნქციონალი**:
- * უნდა შეიძლებოდეს ფილმების და სერიალების CRUD (შექნმა, წაკითხვა, განახლება, წაშლა)
- * მომხამარებელს  საშუალება ეძლევა შეაფასოს ფილმი.
- * მომხამარებელს  საშუალება ეძლევა შეაფასოს სერიალის ეპიზოდი (უშუალოდ სერიალი არა).
- * სერიალის შემთხვევაში session და episode აუცილებელი ველია;
- * ზოგიერთი ფილმი შედგება ნაწილისგან ასეთ შემთხვეაში მომხმარებელმა ნაწილი უნდა შეაფასოს 
-   * მაგალითად _Pirates of the Caribbean_ (კარიბის ზღვის მეკობრეები) ის შედგება რამდენიმე ნაწილისგან 
-   _The Curse of the Black Pearl_, _Dead Man's Chest_, _At World's End_, _On Stranger Tides_, _Dead Men Tell No Tales_
-   უშუალოდ ამ ეპიზოდების შეფასება უნდა მოხდეს და არა _Pirates of the Caribbean_
- * ეპიზოდის score (შეფასება) ითვლება, ამ ეპიზოდზე გაკეთებული შეფასებების საშუალო არითმეტიკულით.
-   * თუ ეპიზოდი ჯერ არავის შეუფასებია ე.წ. default მნიშვნელობა მიენიჭოს, რომელიც კონფიგურირებადი იქნება.
- * სერიალის შეფასება ხდება მისი ყველა ეპიზოდის შეფასების საშუალო არითმეტიკულით.
- * ფილმის შეფასებაც ისევე იმუშავებს როგორც სერიალის შეფასება
- * დაამატეთ endpoint ძებნა - რომელიც სახელის მიხედვით მოძებნის ფილმს/სერიალს.
-   * ექნება 1 boolean პარამეტრიც რომელიც დააბრუნებს ეპიზოდების სიას მხოლოდ მაშინ თუ პარამეტრი true იქნება.
+Example: Pirates of the Caribbean consists of several installments:
+* The Curse of the Black Pearl
+* Dead Man’s Chest
+* At World’s End
+* On Stranger Tides
+* Dead Men Tell No Tales
 
-**ტექნიკური მოთხოვნები**
- * დაიცავით სახელების დარქმევის შეთანხმება
- * დაიცავით REST-WS-ის ენდპოინტების შექმნის შეთანხმება
- * გამოიყენეთ ე.წ. ვალიდატორი.
- * გქონდეთ ე.წ. Swagger დოკუმენტაცია როგორც მოდელებზე ასევე კონტროლერებზე.
+Users must rate these installments separately, not the entire Pirates of the Caribbean franchise
 
-### მაგალითი
+✅ The score of an episode is calculated as the average of all user ratings for that episode
 
-Pirates of the Caribbean ფილმზე, ეპიზოდებზე არის ასეთი შეფასებები;
- 1. The Curse of the Black Pearl - 7,8,5,6,7,8 
- 2. Dead Man's Chest - 4,9,7,6,8,5,4,8,5,9 
- 3. At World's End - 1,9,7,10,7,6,8,7 
- 4. On Stranger Tides - 8,7,6,8,9,10 
- 5. Dead Men Tell No Tales 7
+If an episode has not yet been rated, it should have a configurable default value
 
-და ამ ფილმის მოძენბისას უნდა დაბრუნდეს შემდეგი მნიშვნელობა
+✅ The score of a series is calculated as the average of all its episodes' ratings
+
+✅ The score of a movie (if it consists of multiple parts) is also calculated as the average of all its parts' ratings
+
+✅ Implement a search endpoint to find movies/series by name
+
+It should include a boolean parameter to determine whether episode details should be included in the response
+
+🛠️ Technical Requirements:
+🔹 Follow standard naming conventions
+
+🔹 Adhere to RESTful API design principles
+
+🔹 Implement input validation
+
+🔹 Provide Swagger API documentation for both models and controllers
+
+📌 Example
+Consider a scenario where the Pirates of the Caribbean movies have been rated as follows:
+
+Episode Title	Ratings;
+ 1.The Curse of the Black Pearl -	7, 8, 5, 6, 7, 8
+ 2.Dead Man's Chest	- 4, 9, 7, 6, 8, 5, 4, 8, 5, 9
+ 3.At World's End	- 1, 9, 7, 10, 7, 6, 8, 7
+ 4.On Stranger Tides - 8, 7, 6, 8, 9, 10
+ 5.Dead Men Tell No Tales	- 7
+
 ``` JSON
 {
   "name": "Pirates of the Caribbean",
   "description": "American fantasy supernatural swashbuckler film series",
   "releaseDate": "2003-07-09",
-  "score": 7.0 // საშუალო (6.5, 6.8, 6.9, 7, 8) = 7.04 ამიტომ 7.0
-  "episodes" [
+  "score": 7.0,  // Average of (6.5, 6.8, 6.9, 7, 8) = 7.04 → rounded to 7.0
+  "episodes": [
     {
         "episode": 1,
         "name": "The Curse of the Black Pearl",
         "description": "Blacksmith Will Turner teams up with eccentric pirate Captain Jack Sparrow to save Turner's love ... AND SO ON",
         "releaseDate": "2003-07-09",
-        "score": 6.8 // საშუალო (7,8,5,6,7,8) = 6.8333333 ამიტომ 6.8
-    },{
+        "score": 6.8  // Average (7,8,5,6,7,8) = 6.833333 → rounded to 6.8
+    },
+    {
         "episode": 2,
         "name": "Dead Man's Chest",
         "description": "PLOT OF Dead Man's Chest.",
         "releaseDate": "2006-07-07",
-        "score": 6.5 // საშუალო (4,9,7,6,8,5,4,8,5,9) = 6.5 
-    },{
+        "score": 6.5  // Average (4,9,7,6,8,5,4,8,5,9) = 6.5
+    },
+    {
         "episode": 3,
         "name": "At World's End",
         "description": "PLOT OF At World's End.",
         "releaseDate": "2007-05-25",
-        "score": 6.9 // საშუალო (1,9,7,10,7,6,8,7) = 6.875
-    },{
+        "score": 6.9  // Average (1,9,7,10,7,6,8,7) = 6.875 → rounded to 6.9
+    },
+    {
         "episode": 4,
         "name": "On Stranger Tides",
         "description": "PLOT OF On Stranger Tides.",
         "releaseDate": "2011-05-20",
-        "score": 8.0 // საშუალო (8,7,6,8,9,10) = 8
-    },{
+        "score": 8.0  // Average (8,7,6,8,9,10) = 8.0
+    },
+    {
         "episode": 5,
         "name": "Dead Men Tell No Tales",
         "description": "PLOT OF Dead Men Tell No Tales.",
         "releaseDate": "2017-05-26",
-        "score": 7.0 // საშუალო (7) = 7
+        "score": 7.0  // Average (7) = 7.0
     }
   ]
 }
-```
-ხოლო თუ ეპიზოდების გარეშე მოვითხოვე მოძენბა შესაბამისად
+``` 
+If episode details are not requested, the response should be:
+
 ``` JSON
 {
   "name": "Pirates of the Caribbean",
   "description": "American fantasy supernatural swashbuckler film series",
   "releaseDate": "2003-07-09",
-  "score": 7.0 // საშუალო (6.5, 6.8, 6.9, 7, 8) = 7.04 ამიტომ 7.0
+  "score": 7.0  // Average (6.5, 6.8, 6.9, 7, 8) = 7.04 → rounded to 7.0
 }
-```
-
-
-## **გისურვებთ წარმატებებს** !!!
+``` 
